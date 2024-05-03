@@ -11,11 +11,13 @@ class Pizza {
 }
 
 interface Builder {
-    public Pizza setDough(String dough);
+    public Builder setDough(String dough);
 
-    public Pizza setSauce(String sauce);
+    public Builder setSauce(String sauce);
 
-    public Pizza setTopping(String topping);
+    public Builder setTopping(String topping);
+
+    public void build();
 }
 
 class PizzaBuilder implements Builder {
@@ -23,34 +25,40 @@ class PizzaBuilder implements Builder {
     Pizza pizza;
 
     public PizzaBuilder() {
-
+        this.pizza = new Pizza();
     }
 
     @Override
-    public Pizza setSauce(String sauce) {
+    public Builder setSauce(String sauce) {
         this.pizza.sauce = sauce;
-        return this.pizza;
+        return this;
     }
 
     @Override
-    public Pizza setDough(String dough) {
+    public Builder setDough(String dough) {
         this.pizza.dough = dough;
-        return this.pizza;
+        return this;
     }
 
     @Override
-    public Pizza setTopping(String topping) {
+    public Builder setTopping(String topping) {
         this.pizza.topping = topping;
-        return this.pizza;
+        return this;
+    }
+
+    @Override
+    public void build() {
+        this.pizza.print();
     }
 }
 
 public class BuilderPattern {
     public static void main(String[] args) {
         Builder pizzaBuilder = new PizzaBuilder();
-        pizzaBuilder.setSauce("Hot");
-        pizzaBuilder.setDough("Thick");
-        pizzaBuilder.setTopping("Meat");
+        pizzaBuilder.setSauce("Hot")
+                .setDough("Thick")
+                .setTopping("Meat")
+                .build();
 
     }
 }
